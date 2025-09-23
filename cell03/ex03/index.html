@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+    }
+
+    .container {
+      width: 400px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    #newBtn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      transition: background 0.2s;
+    }
+
+    #newBtn:hover {
+      background: #1d4ed8;
+    }
+
+    #ft_list {
+      display: flex;
+      flex-direction: column-reverse; /* so new tasks appear on top */
+      gap: 8px;
+    }
+
+    .todo {
+      padding: 10px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+      word-break: break-word;
+    }
+
+    .todo:hover {
+      background: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>My To-Do List</h2>
+    <button id="newBtn">New</button>
+    <div id="ft_list"></div>
+  </div>
+
+  <script>
+    const listContainer = document.getElementById("ft_list");
+    const newBtn = document.getElementById("newBtn");
+
+    // Load tasks from cookies on page load
+    window.onload = () => {
+      const tasks = getCookie("todoList");
+      if (tasks) {
+        const todoArray = JSON.parse(tasks);
+        todoArray.forEach(taskText => {
+          addTodo(taskText, false);
+        });
+      }
+    };
+
+    // Function to create a new task
+    function addTodo(text, save = true) {
+      if (!text) return;
+      const todoDiv = document.createElement("div");
+      todoDiv.className = "todo";
+      todoDiv.textContent = text;
+
+      // Remove task on click with confirmation
+      todoDiv.addEventListener("click", () => {
+        if (confirm("Do you want to remove this TO DO?")) {
+          todoDiv.remove();
+          saveTasksToCookie();
+        }
+      });
+
+      // Add new tasks to the top visually
+      listContainer.appendChild(todoDiv);
+
+      if (save) saveTasksToCookie();
+    }
+
+    // Handle New button click
+    newBtn.addEventListener("click", () => {
+      const taskText = prompt("Enter a new TO DO:");
+      if (taskText && taskText.trim() !== "") {
+        addTodo(taskText.trim());
+      }
+    });
+
+    // Save all tasks in cookie
+    function saveTasksToCookie() {
+      const tasks = [];
+      listContainer.querySelectorAll(".todo").forEach(todo => tasks.push(todo.textContent));
+      setCookie("todoList", JSON.stringify(tasks), 7); // cookie valid for 7 days
+    }
+
+    // Helper functions to set/get cookies
+    function setCookie(name, value, days) {
+      const d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      const expires = "expires="+ d.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+      const cname = name + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for(let i=0; i<ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(cname) === 0) return c.substring(cname.length, c.length);
+      }
+      return "";
+    }
+  </script>
+</body>
+</html>

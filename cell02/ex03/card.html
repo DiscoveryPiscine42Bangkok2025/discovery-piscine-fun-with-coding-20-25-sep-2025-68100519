@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Profile Card</title>
+<style>
+  body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:#f0f2f5;
+    margin:0;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+
+  .card{
+    width:320px;
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.1);
+    padding:1.5rem;
+    text-align:center;
+  }
+
+  .card h2{
+    margin-top:0;
+    margin-bottom:1rem;
+    font-size:1.4rem;
+    color:#222;
+  }
+
+  .card table{
+    width:100%;
+    border-collapse:collapse;
+  }
+
+  .card td{
+    border:none; /* invisible table */
+    padding:.3rem 0;
+  }
+
+  .profile-pic{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .login{
+    font-weight:600;
+    margin-top:.6rem;
+  }
+
+  .desc{
+    color:#555;
+    font-size:.95rem;
+    margin-top:.2rem;
+  }
+
+  .socials{
+    margin:1rem 0;
+  }
+  .socials img{
+    width:28px;
+    height:28px;
+    margin:0 .25rem;
+    border-radius:6px;
+    transition:transform .2s;
+  }
+  .socials img:hover{
+    transform:scale(1.1);
+  }
+
+  .contact-btn{
+    display:inline-block;
+    padding:.6rem 1.2rem;
+    background:#2563eb;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:600;
+    transition:background .2s;
+  }
+  .contact-btn:hover{
+    background:#1d4ed8;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>My Profile</h2>
+  <table>
+    <tr>
+      <td><img class="profile-pic" src="https://via.placeholder.com/100" alt="Profile picture"></td>
+    </tr>
+    <tr>
+      <td class="login">@mylogin</td>
+    </tr>
+    <tr>
+      <td class="desc">Web Designer</td>
+    </tr>
+    <tr>
+      <td>
+        <div class="socials">
+          <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+          <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+          <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><a class="contact-btn" href="#">Contact</a></td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

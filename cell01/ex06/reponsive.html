@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Responsive Table 1–5</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    table {
+      width: 100%;          /* cover full width */
+      height: 100%;         /* cover full height */
+      border-collapse: collapse;
+      table-layout: fixed;  /* makes cells auto-resize */
+    }
+    td {
+      border: 1px solid black;
+      text-align: center;
+      font-size: 2vw;       /* responsive font size */
+      word-wrap: break-word; /* prevent overflow */
+    }
+    .cell1 { background-color: lightgreen; }
+    .cell2 { background-color: lightcoral; }
+    .cell3 { background-color: lightblue; }
+    .cell4 { background-color: khaki; }
+    .cell5 { background-color: plum; }
+
+    /* Optional: on very small screens, stack cells vertically */
+    @media (max-width: 600px) {
+      table, tr, td {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      td {
+        font-size: 5vw;
+        margin-bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <tr>
+      <td class="cell1">Cell 1</td>
+      <td class="cell2">Cell 2</td>
+      <td class="cell3">Cell 3</td>
+      <td class="cell4">Cell 4</td>
+      <td class="cell5">Cell 5</td>
+    </tr>
+  </table>
+</body>
+</html>

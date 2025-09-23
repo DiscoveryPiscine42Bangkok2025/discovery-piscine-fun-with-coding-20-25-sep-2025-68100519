@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Responsive Full-Page Table — Cells 1–5</title>
+<style>
+  /* Make the page and table fill the viewport */
+  :root{
+    --gap: 10px;
+    --min-font: 12px;
+    --max-font: 36px;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+  }
+
+  /* Full page table */
+  .fullpage-table{
+    width:100%;
+    height:100vh;                 /* cover entire page */
+    border-collapse: collapse;
+    table-layout: fixed;          /* cells shrink consistently */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: #0f172a;          /* subtle page background behind cell gaps */
+  }
+
+  /* Visible gap around cells by using border spacing */
+  .fullpage-table {
+    border-spacing: var(--gap);
+  }
+
+  /* Each cell styling */
+  .fullpage-table td{
+    background: linear-gradient(180deg, #ffffff, #f1f5f9); /* sample card look */
+    padding: 1rem;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;             /* keep content inside */
+    white-space: nowrap;          /* keep title on one line (change if you want wrapping) */
+    text-overflow: ellipsis;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.25);
+    transition: transform .18s ease, box-shadow .18s ease;
+    /* Responsive font size that shrinks with viewport */
+    font-size: clamp(var(--min-font), 2.4vw, var(--max-font));
+  }
+
+  /* small hover flourish on wide screens */
+  @media (hover: hover) and (min-width: 720px){
+    .fullpage-table td:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(2,6,23,0.35);
+    }
+  }
+
+  /* Layout: 3 cells on first row, 2 cells on second row that span evenly */
+  /* Using explicit column widths will keep proportions when shrinking */
+  .col-1 { width: 33.3333%; }  /* cell1 */
+  .col-2 { width: 33.3333%; }  /* cell2 */
+  .col-3 { width: 33.3333%; }  /* cell3 */
+  .col-4 { width: 50%; }       /* cell4 */
+  .col-5 { width: 50%; }       /* cell5 */
+
+  /* RESPONSIVE: On narrow screens convert table into stacked blocks so cells never overflow.
+     This technique keeps all layout purely in CSS and guarantees the table shrinks/flows. */
+  @media (max-width: 720px){
+    .fullpage-table,
+    .fullpage-table thead,
+    .fullpage-table tbody,
+    .fullpage-table tr,
+    .fullpage-table th,
+    .fullpage-table td {
+      display: block;
+      width: 100%;
+    }
+
+    /* Remove border spacing when stacked, and instead use padding between blocks */
+    .fullpage-table {
+      border-spacing: 0;
+      padding: var(--gap);
+    }
+    .fullpage-table td {
+      margin-bottom: var(--gap);
+      white-space: normal;         /* allow multiple lines on small screens */
+    }
+
+    /* Optional: make last item take no extra margin */
+    .fullpage-table td:last-child { margin-bottom: 0; }
+  }
+
+  /* When printing, make sure it still tries to fit reasonably */
+  @media print {
+    .fullpage-table { height: auto; border-spacing: 6px; }
+    .fullpage-table td { font-size: 12pt; }
+  }
+
+  /* Small utilities for demo content inside cells */
+  .cell-label{
+    display:block;
+    font-weight:700;
+    margin-bottom: .35rem;
+  }
+  .cell-desc{
+    display:block;
+    opacity:.75;
+    font-weight:500;
+    font-size: .85em;
+  }
+
+</style>
+</head>
+<body>
+
+<table class="fullpage-table" role="table" aria-label="Responsive full page table">
+  <tbody>
+    <tr>
+      <td class="col-1">
+        <span class="cell-label">Cell 1</span>
+        <span class="cell-desc">Top left — scales with the page</span>
+      </td>
+      <td class="col-2">
+        <span class="cell-label">Cell 2</span>
+        <span class="cell-desc">Top center</span>
+      </td>
+      <td class="col-3">
+        <span class="cell-label">Cell 3</span>
+        <span class="cell-desc">Top right</span>
+      </td>
+    </tr>
+
+    <tr>
+      <!-- Two cells across the bottom row, each taking half the width -->
+      <td class="col-4">
+        <span class="cell-label">Cell 4</span>
+        <span class="cell-desc">Bottom left — also responsive</span>
+      </td>
+      <td class="col-5">
+        <span class="cell-label">Cell 5</span>
+        <span class="cell-desc">Bottom right — stacks on small screens</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
